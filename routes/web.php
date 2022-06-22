@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\autoresController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,3 +19,5 @@ Route::get('/', function () {
 });
 
 Route::view('prueba','prueba');
+Route::view('agregar','aggAutor');
+Route::apiResource('apiAutor',autoresController::class);
