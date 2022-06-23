@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Autor;
+//use App\Http\Requests\autores\UpdateRequest
 
 
 class autoresController extends Controller
@@ -59,7 +60,18 @@ class autoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //reconoce,busca en la base de datos la tabla con esa id
+        $autor=Autor::find($id);
+        //llamar los datos que contiene la tabla
+        $autor->nombre=$request->nombre;
+        $autor->apellido_p=$request->apellido_p;
+        $autor->apellido_m=$request->apellido_m;
+        $autor->pais=$request->pais;
+        $autor->anio_nacimiento=$request->anio_nacimiento;
+        $autor->anio_defuncion=$request->anio_defuncion;
+        $autor->estado=1;
+        $autor->update(); //actualiza los datos que se obtiene del request
+
     }
 
     /**
@@ -71,5 +83,13 @@ class autoresController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function softdelete(Request $request)
+    {
+        //
+        $autor=Autor::find($request->id_autor);
+        $autor->estado=0;
+        $autor->update();
     }
 }

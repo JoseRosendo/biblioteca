@@ -21,3 +21,4 @@ Route::get('/', function () {
 Route::view('prueba','prueba');
 Route::view('agregar','aggAutor');
 Route::apiResource('apiAutor',autoresController::class);
+Route::put('desactivar/estado','App\Http\Controllers\autoresController@softdelete');
