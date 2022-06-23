@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('apellido_m',50);
             $table->string('pais',50);
             $table->string('anio_nacimiento',20);
-            $table->string('anio_defuncion',20);
+            $table->string('anio_defuncion',20)->nullable();
+            $table->boolean('estado')->default(1);
             $table->timestamps();
         });
     }
