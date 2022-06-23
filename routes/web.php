@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\autoresController;
+use App\Http\Controllers\AutoresController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,5 +20,5 @@ Route::get('/', function () {
 
 Route::view('prueba','prueba');
 Route::view('agregar','aggAutor');
-Route::apiResource('apiAutor',autoresController::class);
-Route::put('desactivar/estado','App\Http\Controllers\autoresController@softdelete');
+Route::apiResource('apiAutores',AutoresController::class);
+Route::put('desactivar/estado','App\Http\Controllers\AutoresController@softdelete');
