@@ -17,22 +17,16 @@ new Vue({
         agregando: true,
         autores: [],
         buscar: '',
-        id_autor:0
-
-
-        // cantidad: 0,
-        // precio: 1,
-
+        id_autor:0,
+        error:0,
+        arrayError:[]
 
     },
 
     // Al crearse la pagina 
     created: function() {
         this.obtenerAutores();
-        // this.obtenerProductos();
-        // this.obtenerBebidas();
-        // this.obtenerComidas();
-
+ 
     },
 
 
@@ -45,8 +39,6 @@ new Vue({
                 console.log(json);
             });
         },
-
-
 
         mostrarModal: function() {
             this.agregando = true;
@@ -61,7 +53,46 @@ new Vue({
             $('#modalAutor').modal('show');
         },
 
+        validarInputs(){
+
+            this.error=0;
+            this.arrayError=[];
+
+            if (!this.nombre) this.arrayError.push('El nombre es requerido');
+            if (this.nombre.length > 30) this.arrayError.push('El nombre tiene un limite de 60 letras');
+            if (!this.apellido_p) this.arrayError.push('El apellido paterno es requerido');
+            if (this.apellido_p.length > 30) this.arrayError.push('El apellido paterno tiene un limite de 30 letras');
+            if (!this.apellido_m) this.arrayError.push('El apellido materno es requerido');
+            if (this.apellido_m.length > 30) this.arrayError.push('El apellido materno tiene un limite de 30 letras');
+            if (!this.pais) this.arrayError.push('El pais es requerido');
+            if (this.pais.length > 20) this.arrayError.push('El pais tiene un limite de 20 letras');
+            if (!this.anio_nacimiento) this.arrayError.push('El  anio_nacimiento es requerido');
+            if (this.anio_nacimiento.length > 11) this.arrayError.push('La fecha de nacimiento tiene un limite de 11 digitos');
+            
+            //if (this.anio_defuncion.length > 11) this.arrayError.push('La fecha de defuncion tiene un limite de 11 digitos');
+
+            //compruebo si el mensaje tiene algun error para convertir a la variabe  en 1
+            if(this.arrayError.length) this.error=1;
+                //retorno el rror 
+            return this.error;
+            
+        },
+
         guardarAutor: function() {
+
+            if (this.validarInputs()) {
+                
+                for (var i =0; i < this.arrayError.length; i++) {
+
+                    toastr.error(this.arrayError[i],'Verefica tus campos',{
+
+                         
+                    });
+                }
+
+                return;
+            }
+
             var autor = {
                 nombre: this.nombre,
                 apellido_p: this.apellido_p,
@@ -103,47 +134,75 @@ new Vue({
                 
         },
 
-        softdeleteAutor: function(id){
-           //captura la url de la ruta (recuerda que es una ruta externa)
-           //haces la peticion put
-           //mandas como parametro el valor de la id que obtuviste,
-	    let url = 'desactivar/estado';
-            this.$http.put(url,{'id_autor':id,}).then(function(){
-			//sucede el cambio y actualiza la tabla
-		    this.obtenerAutores();
-	        });
-
-
-        },
-
         actualizarAutor: function(){
+                
+                if (this.validarInputs()) {
+                    
+                    for (var i =0; i < this.arrayError.length; i++) {
+
+                        toastr.error(this.arrayError[i],'Verefica tus campos');
+                    }
+
+                    return;
+                }
+
                 //creo un array que contendra los datos
-	    let AutorUpdate = {
-		    'nombre':this.nombre,
-		    'apellido_p':this.apellido_p,
-		    'apellido_m':this.apellido_m,
-		    'pais':this.pais,
-		    'anio_defuncion':this.anio_defuncion,
-		    'anio_nacimiento':this.anio_nacimiento
-	    };
+        	    let AutorUpdate = {
+        		    'nombre':this.nombre,
+        		    'apellido_p':this.apellido_p,
+        		    'apellido_m':this.apellido_m,
+        		    'pais':this.pais,
+        		    'anio_defuncion':this.anio_defuncion,
+        		    'anio_nacimiento':this.anio_nacimiento
+        	    };
 
 
-            this.$http.patch(apiAutores + '/' + this.id_autor, AutorUpdate).then(function(){
-                //dejo vacio los campos
-                this.nombre="";
-                this.apellido_p="";
-                this.apellido_m="";
-                this.pais="";
-                this.anio_nacimiento="";
-                this.anio_defuncion="";
-                //oculto el modal
-                $('#modalAutor').modal('hide');
-                //refreco la tabla metodo index
-                this.obtenerAutores();
-            });
+                this.$http.patch(apiAutores + '/' + this.id_autor, AutorUpdate).then(function(){
+                    //dejo vacio los campos
+                    this.nombre="";
+                    this.apellido_p="";
+                    this.apellido_m="";
+                    this.pais="";
+                    this.anio_nacimiento="";
+                    this.anio_defuncion="";
+                    //oculto el modal
+                    $('#modalAutor').modal('hide');
+                    //refreco la tabla metodo index
+                    this.obtenerAutores();
+                });
         
 
         },
+
+        softdeleteAutor: function(id){
+           
+        
+                let url = 'desactivar/estado';
+                
+
+                Swal.fire({
+                title: '¿Esta seguro de dar de baja al autor?',
+                text: "No podra restablecerlo!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ok',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                if (result.isConfirmed) {
+         
+                    this.$http.put(url,{'id_autor':id,}).then(function(){
+                    //sucede el cambio y actualiza la tabla
+                    this.obtenerAutores();
+                    });                    
+                    
+                    }
+                });
+
+        },
+
+
 
     },
 

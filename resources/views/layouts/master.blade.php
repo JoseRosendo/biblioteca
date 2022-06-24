@@ -18,6 +18,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Google Font: Source Sans Pro -->
 <!--   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> -->
   <script src="{{asset('js/vue.js')}}" type="text/javascript"></script>
+  <!-- script de alesrt toast -->
+  <link rel="stylesheet" type="text/css" href="{{asset('css/toastr.css')}}">
+
 
   <meta name="token" id="token" value="{{ csrf_token() }}"> <!--cuando activo el token en el kernel, esto solicita el permiso para las vistas de las apps-->
 
@@ -161,7 +164,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/" class="img-circle elevation-2" alt="User Image">
+          <img src="dist/img/LogoOficial.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">Equipo Umizoomi</a>
@@ -220,7 +223,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Lista</h1>
+           <!--  <h1 class="m-0 text-dark"></h1> -->
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -273,11 +276,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 @stack('scripts') <!-- para insertar scrips desde otras paginas que se crearan o crearon de manera dimanica y aparecera aqui -->
 
 <!-- jQuery -->
-<script src="js/jquery.min.js"></script>
+<script src="{{asset('js/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
-<script src="js/bootstrap.bundle.min.js"></script>
+<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
-<script src="js/adminlte.min.js"></script>
+<script src="{{asset('js/adminlte.min.js')}}"></script>
+<!-- script de toastr -->
+<script src="{{asset('js/toastr.min.js')}}"></script>
+<!-- script de alert -->
+<script src="{{asset('js/sweetalert.js')}}"></script>
 
 
 </body>

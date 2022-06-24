@@ -1,8 +1,6 @@
 @extends('layouts.master') 
 @section('titulo', 'agregarAutor')
 @section('contenido')
-
-
 <!-- INICIA VUE -->
 <div id="autor">
 	<div class="row">
@@ -82,6 +80,15 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
+
+		      	<!-- <div v-show="error" class="form-group row div-error">
+		            <div class="text-center text-error">
+		                <div v-for="error in arrayError" v-text="error">
+
+		                </div>
+		            </div>
+		        </div> -->
+
 		        
 		      	<h6>NOMBRE DEL AUTOR</h6>
 		      	<input type="text" class="form-control" placeholder="Nombre del autor" v-model="nombre"><br>
