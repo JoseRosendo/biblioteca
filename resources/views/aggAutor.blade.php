@@ -40,11 +40,16 @@
 						<td>@{{autor.id_autor}}</td>
 						<td>@{{autor.nombre}}</td>
 						<td>@{{autor.apellido_p}}</td>
-            <td>@{{autor.apellido_m}}</td>
-            <td>@{{autor.pais}}</td>
-            <td>@{{autor.anio_nacimiento}}</td>
-            <td>@{{autor.anio_defuncion}}</td>
-            <td>@{{autor.estado}}</td>
+			            <td>@{{autor.apellido_m}}</td>
+			            <td>@{{autor.pais}}</td>
+			            <td>@{{autor.anio_nacimiento}}</td>
+			            <td>@{{autor.anio_defuncion}}</td>
+			            <td v-if="autor.estado=='1'" style="color: green;">
+			            	Activo
+			            </td>
+			            <td v-else style="color: red;">
+			            	Inactivo
+			            </td>
 
 						<td>
 							<div class="btn-group">
