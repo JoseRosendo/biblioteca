@@ -17,6 +17,7 @@ new Vue({
         agregando: true,
         autores: [],
         buscar: '',
+        id_autor:0
 
 
         // cantidad: 0,
@@ -70,6 +71,8 @@ new Vue({
                 anio_defuncion: this.anio_defuncion
 
             };
+            
+
             this.$http.post(apiAutores, autor).then(function(json) {
                 this.obtenerAutores();
                 this.nombre = '';
@@ -85,6 +88,60 @@ new Vue({
             $('#modalAutor').modal('hide');
 
             console.log(autor);
+
+        },
+        editarAutor: function(data=[]) {
+            this.agregando = false;
+            this.id_autor=data['id_autor'];
+            this.nombre=data['nombre'];
+            this.apellido_p=data['apellido_p'];
+            this.apellido_m=data['apellido_m'];
+            this.pais=data['pais'];
+            this.anio_nacimiento=data['anio_nacimiento'];
+            this.anio_defuncion=data['anio_defuncion'];
+            $('#modalAutor').modal('show');
+                
+        },
+
+        softdeleteAutor: function(id){
+           //captura la url de la ruta (recuerda que es una ruta externa)
+           //haces la peticion put
+           //mandas como parametro el valor de la id que obtuviste,
+	    let url = 'desactivar/estado';
+            this.$http.put(url,{'id_autor':id,}).then(function(){
+			//sucede el cambio y actualiza la tabla
+		    this.obtenerAutores();
+	        });
+
+
+        },
+
+        actualizarAutor: function(){
+                //creo un array que contendra los datos
+	    let AutorUpdate = {
+		    'nombre':this.nombre,
+		    'apellido_p':this.apellido_p,
+		    'apellido_m':this.apellido_m,
+		    'pais':this.pais,
+		    'anio_defuncion':this.anio_defuncion,
+		    'anio_nacimiento':this.anio_nacimiento
+	    };
+
+
+            this.$http.patch(apiAutores + '/' + this.id_autor, AutorUpdate).then(function(){
+                //dejo vacio los campos
+                this.nombre="";
+                this.apellido_p="";
+                this.apellido_m="";
+                this.pais="";
+                this.anio_nacimiento="";
+                this.anio_defuncion="";
+                //oculto el modal
+                $('#modalAutor').modal('hide');
+                //refreco la tabla metodo index
+                this.obtenerAutores();
+            });
+        
 
         },
 

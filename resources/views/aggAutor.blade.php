@@ -53,10 +53,10 @@
 
 						<td>
 							<div class="btn-group">
-								<button type="button" class="btn btn-info" @click="editandoAutor(autor.id_autor)">
+								<button type="button" class="btn btn-info" @click="editarAutor(autor)">
 									<i class="fas fa-edit"></i>
 								</button>
-		                        <button type="button" class="btn btn-danger" @click="eliminarAutor(autor.id_autor)">
+		                        <button type="button" class="btn btn-danger" @click="softdeleteAutor(autor.id_autor)">
 		                        	<i class="fas fa-trash-alt"></i>
 		                        </button>
 		                    </div>    
